@@ -37,6 +37,25 @@ export default function App() {
     scene.add(pikachu);
   }
 
+  async function spawnCorona() {
+    const model = {
+      'corona.obj': require('./assets/corona/Corona.obj'),
+      'corona.mtl': require('./assets/corona/Corona.mtl'),
+      'corona.png': require('./assets/corona/BotellaText.jpg'),
+    }
+
+    const corona = await ExpoTHREE.loadAsync(
+      [model['corona.obj'], model['corona.mtl']],
+      null,
+      name => model[name]
+    );
+
+    ExpoTHREE.utils.scaleLongestSideToSize(corona, 0.2);
+    ExpoTHREE.utils.alignMesh(corona, { y: 1 });
+  
+    scene.add(corona);
+  }
+
   async function spawn3dPokemon() {
     const model = {
       'umbreon.obj': require('./assets/umbreon/Umbreon.obj'),
@@ -79,7 +98,7 @@ export default function App() {
     /**
      * Purple Cube
      */
-    spawnPurpleCube();
+    // spawnPurpleCube();
 
     /**
      * Pikachu (2D plane)
@@ -90,6 +109,11 @@ export default function App() {
      * Umbreon Pokemon (3D model with texture fail)
      */
     // spawn3dPokemon();
+
+    /**
+     * Spawn Corona
+     */
+    spawnCorona();
   }
 
   function onResize({ x, y, scale, width, height }) {
